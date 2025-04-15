@@ -62,8 +62,8 @@ jobs:
         env:
           TOMCAT_USERNAME: admin
           TOMCAT_PASSWORD: admin123
-          TOMCAT_HOST: 192.168.85.228
+          TOMCAT_HOST: https://b364-27-107-116-214.ngrok-free.app
           TOMCAT_PORT: 8085
            
         run: |
-          curl -u admin:admin123 -T onlinebookshop "http://192.168.85.228:8085/manager/text/deploy?path=/yourapp&update=true"
+          curl -u admin:admin123 -T onlinebookshop "https://b364-27-107-116-214.ngrok-free.app/manager/text/deploy?path=/yourapp&update=true"
