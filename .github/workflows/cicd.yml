@@ -59,6 +59,12 @@ jobs:
           path: onlinebookshop
 
       - name: Deploy WAR to Tomcat via curl
+        env:
+          TOMCAT_USERNAME: admin
+          TOMCAT_PASSWORD: admin123
+          TOMCAT_HOST: 192.168.85.228
+          TOMCAT_PORT: 8085
+           
         run: |
           curl -u ${{ secrets.TOMCAT_USER }}:${{ secrets.TOMCAT_PASSWORD }} \
                -T onlinebookshop.war \
