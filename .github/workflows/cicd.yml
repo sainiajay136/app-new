@@ -40,3 +40,13 @@ jobs:
         run:  mvn clean package
       - name:  maven test
         run: mvn test
+        
+      - name: Deploy to Tomcat
+      env:
+        TOMCAT_USERNAME: admin
+        TOMCAT_PASSWORD: admin123
+        TOMCAT_HOST: 192.168.85.228
+        TOMCAT_PORT: 8085
+      run: |
+        curl -T target/onlinebookshop.war \
+        "http://$TOMCAT_USERNAME:$TOMCAT_PASSWORD@$TOMCAT_HOST:$TOMCAT_PORT/manager/text/deploy?path=/onlinebookshop&update=true"
