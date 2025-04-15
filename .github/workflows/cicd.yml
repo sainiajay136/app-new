@@ -37,16 +37,29 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run:  mvn clean package
-      - name:  maven test
-        run: mvn test
-        
-      - name: Deploy to Tomcat
-        env:
-          TOMCAT_USERNAME: admin
-          TOMCAT_PASSWORD: admin123
-          TOMCAT_HOST: 192.168.85.228
-          TOMCAT_PORT: 8085
+        run: mvn -f onlinebookshop/pom.xml clean package
+
+      - name: Run Maven Tests
+        run: mvn -f onlinebookshop/pom.xml test
+
+      - name: Upload WAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: onlinebookshop-war
+          path: onlinebookshop/target/onlinebookshop.war
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download WAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: onlinebookshop-war
+          path: .
+
+      - name: Deploy WAR to Tomcat via curl
         run: |
-          curl -T onlinebookshop/target/onlinebookshop.war \
-          "http://$TOMCAT_USERNAME:$TOMCAT_PASSWORD@$TOMCAT_HOST:$TOMCAT_PORT/manager/text/deploy?path=/onlinebookshop&update=true"
+          curl -u ${{ secrets.TOMCAT_USER }}:${{ secrets.TOMCAT_PASSWORD }} \
+               -T onlinebookshop.war \
+               "http://${{ secrets.TOMCAT_HOST }}:8085/manager/text/deploy?path=/onlinebookshop&update=true"
