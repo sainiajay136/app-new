@@ -56,7 +56,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: onlinebookshop-war
-          path: .
+          path: onlinebookshop/target/onlinebookshop.war
 
       - name: Deploy WAR to Tomcat via curl
         run: |
