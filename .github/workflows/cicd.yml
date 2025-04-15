@@ -48,5 +48,5 @@ jobs:
           TOMCAT_HOST: 192.168.85.228
           TOMCAT_PORT: 8085
         run: |
-          curl -T target/onlinebookshop.war \
+          curl -T onlinebookshop/target/onlinebookshop.war \
           "http://$TOMCAT_USERNAME:$TOMCAT_PASSWORD@$TOMCAT_HOST:$TOMCAT_PORT/manager/text/deploy?path=/onlinebookshop&update=true"
