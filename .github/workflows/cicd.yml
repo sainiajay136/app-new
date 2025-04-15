@@ -67,5 +67,5 @@ jobs:
            
         run: |
           curl -u ${{ secrets.TOMCAT_USER }}:${{ secrets.TOMCAT_PASSWORD }} \
-               -T onlinebookshop.war \
+               -T onlinebookshop \
                "http://${{ secrets.TOMCAT_HOST }}:8085/manager/text/deploy?path=/onlinebookshop&update=true"
